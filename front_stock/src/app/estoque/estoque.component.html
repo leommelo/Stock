@@ -1,0 +1,90 @@
+<div class="header">
+  <h2><span>S</span>TOCK</h2>
+  <div class="form-container
+">
+    <form (ngSubmit)="salvar()" #formItem="ngForm">
+      <label>Nome:
+        <input type="text" name="nome" [(ngModel)]="item.nome" required />
+      </label>
+
+      <label>Categoria:
+        <input type="text" name="categoria" [(ngModel)]="item.categoria" required />
+      </label>
+
+      <label>Quantidade:
+        <input type="number" name="quantidade" [(ngModel)]="item.quantidade" required />
+      </label>
+
+      <label>Preço Unitário:
+        <div class="preco-container">
+          <span class="prefixo">R$</span>
+          <input type="number" name="precoUnitario" [(ngModel)]="item.precoUnitario" step="0.01" min="0"
+            pattern="^\d+(\.\d{1,2})?$" required inputmode="decimal" />
+        </div>
+      </label>
+
+      <button type="submit" [disabled]="formItem.invalid">Salvar</button>
+    </form>
+  </div>
+</div>
+
+<div class="itens">
+  <h3>Itens cadastrados:</h3>
+  <div class="grid-container">
+    <ul>
+      <li *ngFor="let i of itens">
+        <div class="item-container">
+          <h3>{{ i.nome }}</h3>
+          <h4>({{ i.categoria }})</h4>
+          <div class="info-item-container">
+            <p> Quantidade em estoque: {{ i.quantidade }} unidades </p>
+            <p> Valor unitário: R$ {{ i.precoUnitario }}</p>
+          </div>
+          <div class="buttons-container">
+            <button (click)="abrirModalEdicao(i)">Editar</button>
+            <button class="delete-button" (click)="confirmarDelete(i)">Apagar</button>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="modal-backdrop" *ngIf="showConfirm">
+  <div class="modal-card">
+    <h3>Tem certeza que deseja apagar este item?</h3>
+    <p><strong>{{ itemToDelete?.nome }}</strong> ({{ itemToDelete?.categoria }})</p>
+    <div class="modal-actions">
+      <button (click)="deletarItem()" class="delete-button">Sim, apagar</button>
+      <button (click)="cancelarDelete()">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-backdrop" *ngIf="editMode">
+  <div class="modal-card">
+    <h3>Editar item</h3>
+    <form (ngSubmit)="salvarEdicao()" #formEdit="ngForm" class="form-modal">
+      <label>Nome:
+        <input type="text" name="nome" [(ngModel)]="itemToEdit.nome" required />
+      </label>
+      <label>Categoria:
+        <input type="text" name="categoria" [(ngModel)]="itemToEdit.categoria" required />
+      </label>
+      <label>Quantidade:
+        <input type="number" name="quantidade" [(ngModel)]="itemToEdit.quantidade" required />
+      </label>
+      <label>Preço Unitário:
+        <div class="preco-container">
+          <span class="prefixo">R$</span>
+          <input type="number" name="precoUnitario" [(ngModel)]="itemToEdit.precoUnitario" step="0.01" min="0"
+            pattern="^\d+(\.\d{1,2})?$" required inputmode="decimal" />
+        </div>
+      </label>
+      <div class="modal-actions">
+        <button class="salvar-button" type="submit" [disabled]="formEdit.invalid">Salvar</button>
+        <button type="button" (click)="cancelarEdicao()">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>
