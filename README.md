@@ -34,6 +34,25 @@ cd seu-repo
 
 ### 2. Configurar o banco de dados
 
+### Exemplo de configuração do `appsettings.json`
+
+Crie o arquivo `API_stock/appsettings.json` com o seguinte conteúdo (ajuste usuário e senha conforme seu ambiente):
+
+```json
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "server=localhost;port=3306;database=stock_db;user=SEU_USUARIO;password=SUA_SENHA;"
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "AllowedHosts": "*"
+}
+```
+
 - Crie um banco MySQL chamado `stock_db` (ou altere o nome no arquivo `API_stock/appsettings.json`).
 - Ajuste o usuário e senha conforme seu ambiente.
 
